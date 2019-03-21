@@ -13,34 +13,30 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
-    @RequestMapping ("/users/ {id} /addresses")
-    public List<Address> getAllAddresses(@PathVariable int id){
-        return addressService.getAllAddresses(id);
+    @RequestMapping ("/users/{userId}/addresses")
+    public List<Address> getAllAddresses(@PathVariable int userId){
+        return addressService.getAllAddresses(userId);
     }
 
     @RequestMapping ("/users/{userId}/addresses/ {id}")
-    public Optional<Address> getAddress(@PathVariable int id){
+    public Optional<Address> getAddress(@PathVariable int userId, @PathVariable int id){
         return addressService.getAddress(id);
     }
 
-    @RequestMapping (method = RequestMethod.POST, value = "/users/ {userId} /addresses")
+    @RequestMapping (method = RequestMethod.POST, value = "/users/{userId}/addresses")
     public void addAddress(@RequestBody Address address, @PathVariable int userId){
         address.setUser(new User(userId, "", "", "", ""));
         addressService.addAddress(address);
     }
 
-    @RequestMapping (method = RequestMethod.PUT, value = "/users/ {userId} /addresses/ {id}")
+    @RequestMapping (method = RequestMethod.PUT, value = "/users/ userId}/addresses/{id}")
     public void updateAddress(@RequestBody Address address, @PathVariable int userId, @PathVariable int id){
         address.setUser(new User(userId, "", "", "", ""));
         addressService.updateAddress(address);
     }
 
-    @RequestMapping (method = RequestMethod.DELETE, value = "/users/ {userId}/addresses/ {id}")
-    public void deleteAddress(@PathVariable int id){
+    @RequestMapping (method = RequestMethod.DELETE, value = "/users/{userId}/addresses/{id}")
+    public void deleteAddress(@PathVariable int userId, @PathVariable int id){
         addressService.deleteAddress(id);
     }
-
-
-
-
 }
